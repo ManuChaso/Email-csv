@@ -41,7 +41,7 @@ export default function Shipment({data, properties}){
     return(
         <div className='shipment-container'>
             <p className='shipment-data'><strong>Receptor:</strong> <span>{data.email}</span></p>
-            <p className='shipment-data'><strong>Asunto:</strong> <span>{data.subject ? data.subject : 'Sin asunto'}</span></p>
+            <p className='shipment-data'><strong>Template ID:</strong> <span>{data.template_id ? data.template_id : 'Sin asunto'}</span></p>
             <p className='shipment-data'><strong>Estado:</strong> <span className={`email-state ${data.event}`}>{data.event}</span></p>
             <p className='shipment-data'><strong>Fecha:</strong> <time dateTime="{data.processed}">{data.processed}</time></p>
             <img ref={infoIconRef} onClick={() => setShowDetails(!showDetailes)} className='shipment-info' src={infoIcon} alt="Información del envio" />

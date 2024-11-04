@@ -55,6 +55,8 @@ function App() {
   }
 
   const applyFilterWithWorker = (filters) => {
+    console.log(filters);
+    
     setLoading(true)
     setPage(0)
     worker.postMessage({data, filters});

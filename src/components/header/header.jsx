@@ -1,66 +1,94 @@
-import { useEffect, useRef, useState } from 'react'
-import './header.css'
+import { useEffect, useRef, useState } from "react";
+import "./header.css";
 
-export default function Header({properties, filter, exportCSV}){
-    const [filters, setFilters] = useState([])
-    const propertiesRef = useRef(null)
-    const operatorsRef = useRef(null)
+export default function Header({ properties, filter, exportCSV }) {
+  const [filters, setFilters] = useState([]);
+  const propertiesRef = useRef(null);
+  const operatorsRef = useRef(null);
+  const [property, setProperty] = useState();
+  const inputRef = useRef();
+
+  useEffect(() => {
+    console.log("ahora");
+    filter(filters);
+  }, [filters]);
+
+  const removeFilter = (i) => {
+    const newArray = [...filters];
+    newArray.splice(i, 1);
+    setFilters(newArray);
+  };
+
+  const handleFilters = (e, especial) => {
+    console.log(e);
     
-    useEffect(() => {
-        console.log('ahora')
-        filter(filters)
-    }, [filters])
-
-    const removeFilter = (i) => {
-        const newArray = [...filters];
-        newArray.splice(i, 1)
-        setFilters(newArray)
+    if ((!especial && e.key === "Enter") || especial) {
+      const newFilter = {
+        propertie: property.current.value,
+        operator: "equal",
+        value: especial === "event" ? e.target.value : inputRef.current.value,
+      };
+      setFilters([...filters, newFilter]);
     }
+  };
 
-    const handleFilters = (e) => {
-        if(e.key === 'Enter'){
-            const newFilter = {
-                propertie: propertiesRef.current.value, 
-                operator: operatorsRef.current.value,
-                value: e.target.value
-            };
-            setFilters([...filters, newFilter])
-            e.target.value = ''
-            propertiesRef.current.value = 'all'
-            operatorsRef.current.value = 'equal'
-        }
-    }
+  return (
+    <header className="header">
+      <div className="header-container">
+        <div className="filter">
+          <select
+            onChange={(e) =>
+              setProperty({ current: { value: e.target.value } })
+            }
+            name="properties"
+            id="properties"
+          >
+            <option value="all">Todo</option>
+            <option value="event">Evento</option>
+            <option value="email">Email</option>
+            <option value="template_id">Template ID</option>
+          </select>
+          {property?.current?.value === "event" ? (
+            <select onChange={(e) => handleFilters(e, "event")}>
+              <option value="processed">Procesado</option>
+              <option value="delivered">Enviado</option>
+              <option value="bounce">Devuelto</option>
+              <option value="open">Abierto</option>
+              <option value="drop">Tirado</option>
+            </select>
+          ) : (
+            <input
+              ref={inputRef}
+              onKeyDown={handleFilters}
+              type="text"
+              placeholder="Valor..."
+            />
+          )}
+          {/* <button className="export-button" onClick={filternow}>
+            Filtrar
+          </button> */}
+        </div>
 
-
-    return(
-        <header className='header'>
-            <div className='header-container'>
-                <div className='filter'>
-                    <select ref={propertiesRef} name="properties" id="properties">
-                        <option value="all">Todo</option>
-                        {properties.map((propertie, i) => 
-                            <option key={i} value={propertie}>{propertie}</option>
-                        )}
-                    </select>
-
-                    <select ref={operatorsRef} name="operator" id="operator">
-                        <option value="equal">Igual que</option>
-                        <option value="greater">Mayor que</option>
-                        <option value="less">Menor que</option>
-                        <option value="greaterEqual">Mayor o igual que</option>
-                        <option value="lessEqual">Menor o igual que</option>
-                    </select>
-
-                    <input onKeyDown={handleFilters} type="text" placeholder='Valor...'/>
-                </div>
-
-                <div className='filters'>
-                        {filters.map((filter, i) => 
-                            <p key={i}>{filter.propertie} {filter.operator} {filter.value} <img onClick={() => removeFilter(i)} src="https://png.pngtree.com/png-vector/20230527/ourmid/pngtree-red-cross-paint-clipart-transparent-background-vector-png-image_7110618.png" alt="" /></p>
-                        )}
-                </div>
-                <button onClick={exportCSV} className='export-button'>Export</button>
-            </div>
-        </header>
-    )
+        <div className="filters">
+          {console.log(filters)}
+          {filters.map((filter, i) => (
+            <>
+              <p key={i}>
+                {filter?.propertie?.current?.value || filter.propertie} ={" "}
+                {filter.value}
+                <img
+                  onClick={() => removeFilter(i)}
+                  src="https://png.pngtree.com/png-vector/20230527/ourmid/pngtree-red-cross-paint-clipart-transparent-background-vector-png-image_7110618.png"
+                  alt=""
+                />
+              </p>
+            </>
+          ))}
+        </div>
+        <button onClick={exportCSV} className="export-button">
+          Export
+        </button>
+      </div>
+    </header>
+  );
 }
