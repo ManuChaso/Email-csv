@@ -1,0 +1,93 @@
+.shipment-container{
+    position: relative;
+    display: flex;
+    align-items: center;
+    gap: 30px;
+    width: 95%;
+    min-height: 100px;
+    padding: 10px;
+    background-color: var(--field-background);
+    box-shadow: 
+    3px 3px 5px 3px rgba(0, 0, 0, 0.3), /* Sombra en la parte inferior derecha */
+    -3px -3px 5px 3px rgba(255, 255, 255, 0.3);
+    border-radius: 10px;
+    transition: all 200ms;
+}
+
+.shipment-container:hover{
+    box-shadow: 
+    8px 8px 10px 3px rgba(0, 0, 0, 0.3), /* Sombra en la parte inferior derecha */
+    -3px -3px 5px 3px rgba(255, 255, 255, 0.3);
+}
+
+.shipment-data{
+    display: flex;
+    justify-content: flex-start;
+    align-items: flex-start;
+    gap: 10px;
+    width: 350px;
+}
+
+.shipment-container span{
+    word-break: break-all;
+}
+
+
+.email-state{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 80px;
+    height: 20px;
+    border-radius: 5px;
+    box-shadow: 
+    0.5px 0.5px 3px 1px rgba(0, 0, 0, 0.3), 
+    -0.5px -0.5px 3px 1px rgba(255, 255, 255, 0.3);
+}
+
+.open{
+    background-color: rgb(90, 190, 90);
+}
+.delivered{
+    background-color: rgb(60, 129, 207);
+}
+.processed{
+    background-color: rgb(218, 163, 62);
+}
+.click{
+    background-color: rgb(151, 48, 192);
+}
+
+.shipment-info{
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    cursor: pointer;
+}
+
+.shipment-details{
+    position: absolute;
+    top: 30px;
+    right: 30px;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    background-color: var(--color-background);
+    box-shadow: 3px 3px 3px 1px rgba(0, 0, 0, 0.6);
+    min-width: 500px;
+    height: 200px;
+    padding: 5px;
+    border-top-left-radius: 10px;
+    border-bottom-left-radius: 10px;
+    border-bottom-right-radius: 10px;
+    color: white;
+    z-index: 2;
+    overflow: scroll;
+}
+
+.shipment-details p{
+    width: 90%;
+    padding: 5px;
+    word-break: break-all;
+    border-bottom: 1px solid white;
+}

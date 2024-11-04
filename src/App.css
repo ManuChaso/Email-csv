@@ -1,0 +1,11 @@
+.app{
+  padding-top: 20px;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: center;
+  gap: 20px;
+  width: 100%;
+  height: calc(100vh - 130px);
+  overflow: scroll;
+}
