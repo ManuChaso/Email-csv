@@ -17,7 +17,12 @@ function App() {
   const [showData, setShowData] = useState([]);
   const [page, setPage] = useState(0);
   const pageSize = 20;
-
+  
+  useEffect(() => {
+    if(error){
+      setFile(null)
+    }
+  }, [error])
 
   useEffect(() => {
     if(file){
@@ -71,6 +76,7 @@ function App() {
       <Header properties={properties} filter={applyFilterWithWorker} exportCSV={exportCSV}/>
       {data.length && <PagesButtons page={page} setPage={setPage} dataLength={filteredData.length ? filteredData.length / 20 : data.length / 20}/>}
       <div className='app'>
+        {error && <p className='error-message'>{error}</p>}
         {loading ? <Loading/> : (
           !file ?
           <InputFile file={file} setFile={setFile}/>

@@ -8,10 +8,10 @@ export default function Header({ properties, filter, exportCSV }) {
   const [property, setProperty] = useState();
   const inputRef = useRef();
 
-  useEffect(() => {
-    console.log("ahora");
-    filter(filters);
-  }, [filters]);
+  // useEffect(() => {
+  //   console.log("ahora");
+  //   filter(filters);
+  // }, [filters]);
 
   const removeFilter = (i) => {
     const newArray = [...filters];
@@ -22,14 +22,12 @@ export default function Header({ properties, filter, exportCSV }) {
   const handleFilters = (e, especial) => {
     console.log(e);
     
-    if ((!especial && e.key === "Enter") || especial) {
       const newFilter = {
         propertie: property.current.value,
         operator: "equal",
         value: especial === "event" ? e.target.value : inputRef.current.value,
       };
       setFilters([...filters, newFilter]);
-    }
   };
 
   return (
@@ -59,11 +57,14 @@ export default function Header({ properties, filter, exportCSV }) {
           ) : (
             <input
               ref={inputRef}
-              onKeyDown={handleFilters}
               type="text"
               placeholder="Valor..."
             />
           )}
+          <div className="apply-filters">
+            <button onClick={(e) => handleFilters(e)} className="add-filter">+</button>
+            <button onClick={() => filter(filters)} className="apply-filter">Filtrar</button>
+          </div>
           {/* <button className="export-button" onClick={filternow}>
             Filtrar
           </button> */}
@@ -72,7 +73,6 @@ export default function Header({ properties, filter, exportCSV }) {
         <div className="filters">
           {console.log(filters)}
           {filters.map((filter, i) => (
-            <>
               <p key={i}>
                 {filter?.propertie?.current?.value || filter.propertie} ={" "}
                 {filter.value}
@@ -82,7 +82,6 @@ export default function Header({ properties, filter, exportCSV }) {
                   alt=""
                 />
               </p>
-            </>
           ))}
         </div>
         <button onClick={exportCSV} className="export-button">
